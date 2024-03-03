@@ -38,8 +38,8 @@ actuator_output:
       group_label: 'BoatMotors'
       channel_label: 'BoatMotors'
       standard_params:
-        disarmed: { min: 0, max: 2000, default: 1000 }
-        min: { min: 0, max: 2000, default: 0 }
-        max: { min: 0, max: 2000, default: 2000 }
-        failsafe: { min: 0, max: 2000 }
+        disarmed: { min: 0, max: 4000, default: 2000 }
+        min: { min: 0, max: 4000, default: 0 }
+        max: { min: 0, max: 4000, default: 4000 }
+        failsafe: { min: 0, max: 4000 }
       num_channels: 2

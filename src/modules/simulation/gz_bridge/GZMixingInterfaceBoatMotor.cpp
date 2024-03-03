@@ -45,8 +45,8 @@ bool GZMixingInterfaceBoatMotor::init(const std::string &model_name)
 
 	// cmd_thrust
 
-		// std::string boat_left_motor_topic = "/model/boat_0/joint/left_propeller_joint/cmd_vel";
-		// std::string boat_right_motor_topic = "/model/boat_0/joint/right_propeller_joint/cmd_vel";
+	// std::string boat_left_motor_topic = "/model/boat_0/joint/left_propeller_joint/cmd_vel";
+	// std::string boat_right_motor_topic = "/model/boat_0/joint/right_propeller_joint/cmd_vel";
 
 	std::string boat_left_motor_topic = "/model/boat_0/joint/left_propeller_joint/cmd_thrust";
 	std::string boat_right_motor_topic = "/model/boat_0/joint/right_propeller_joint/cmd_thrust";
@@ -66,7 +66,8 @@ bool GZMixingInterfaceBoatMotor::init(const std::string &model_name)
 	return true;
 }
 
-bool GZMixingInterfaceBoatMotor::updateOutputs(bool stop_boat_motors, uint16_t outputs[MAX_ACTUATORS], unsigned num_outputs,
+bool GZMixingInterfaceBoatMotor::updateOutputs(bool stop_boat_motors, uint16_t outputs[MAX_ACTUATORS],
+		unsigned num_outputs,
 		unsigned num_control_groups_updated)
 {
 	unsigned active_output_count = 0;
@@ -100,13 +101,13 @@ bool GZMixingInterfaceBoatMotor::updateOutputs(bool stop_boat_motors, uint16_t o
 		// printf("boat_motor_velocity_message: %f\n", (double)boat_motor_velocity_message.velocity(0));
 
 		gz::msgs::Double boat_motor_velocity_message_right;
-		boat_motor_velocity_message_right.set_data(outputs[0] - 1000.0f);
+		boat_motor_velocity_message_right.set_data(outputs[0] - 2000.0f);
 
 		// printf("outputs[0]: %f\n", (double)(outputs[0] - 100.0f));
 		// printf("boat_motor_velocity_message_right: %f\n", (double)boat_motor_velocity_message_right.data());
 
 		gz::msgs::Double boat_motor_velocity_message_left;
-		boat_motor_velocity_message_left.set_data(outputs[0] - 1000.0f);
+		boat_motor_velocity_message_left.set_data(outputs[0] - 2000.0f);
 
 		// printf("boat_motor_velocity_message_left: %f\n", (double)boat_motor_velocity_message_left.data());
 		// printf(" \n");
@@ -114,7 +115,8 @@ bool GZMixingInterfaceBoatMotor::updateOutputs(bool stop_boat_motors, uint16_t o
 
 
 		if (_actuators_pub_left.Valid() && _actuators_pub_right.Valid()) {
-			return (_actuators_pub_right.Publish(boat_motor_velocity_message_right) && _actuators_pub_left.Publish(boat_motor_velocity_message_left));
+			return (_actuators_pub_right.Publish(boat_motor_velocity_message_right)
+				&& _actuators_pub_left.Publish(boat_motor_velocity_message_left));
 		}
 
 	}
