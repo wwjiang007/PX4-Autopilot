@@ -11,21 +11,16 @@ PX4_SIM_MODEL=${PX4_SIM_MODEL:=boat}
 
 param set-default SIM_GZ_EN 1 # Gazebo bridge
 
-# Simulated sensors
-param set-default SENS_EN_GPSSIM 1
-param set-default SENS_EN_BAROSIM 0
-param set-default SENS_EN_MAGSIM 1
-param set-default SENS_EN_ARSPDSIM 1
-
 # Actuator mapping
-param set-default SIM_GZ_WH_FUNC1 101 # right wheel
-param set-default SIM_GZ_WH_MIN1 0
-param set-default SIM_GZ_WH_MAX1 200
-param set-default SIM_GZ_WH_DIS1 100
+param set-default SIM_GZ_BM_FUNC1 101 # thrust
+param set-default SIM_GZ_BM_MIN1 0
+param set-default SIM_GZ_BM_MAX1 2000
+param set-default SIM_GZ_BM_DIS1 1000
 
-param set-default SIM_GZ_WH_FUNC2 102 # left wheel
-param set-default SIM_GZ_WH_MIN2 0
-param set-default SIM_GZ_WH_MAX2 200
-param set-default SIM_GZ_WH_DIS2 100
+param set-default SIM_GZ_BM_FUNC2 102 # thrust
+param set-default SIM_GZ_BM_MIN2 0
+param set-default SIM_GZ_BM_MAX2 2000
+param set-default SIM_GZ_BM_DIS2 1000
 
-param set-default SIM_GZ_WH_REV 1 # reverse right wheel
+param set-default SIM_GZ_SV_FUNC1 201 # steering
+param set-default SIM_GZ_SV_FUNC2 202 # steering
