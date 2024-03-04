@@ -14,13 +14,13 @@ param set-default SIM_GZ_EN 1 # Gazebo bridge
 # Actuator mapping
 param set-default SIM_GZ_BM_FUNC1 101 # thrust
 param set-default SIM_GZ_BM_MIN1 0
-param set-default SIM_GZ_BM_MAX1 4000
-param set-default SIM_GZ_BM_DIS1 2000
+param set-default SIM_GZ_BM_MAX1 8000
+param set-default SIM_GZ_BM_DIS1 4000
 
 param set-default SIM_GZ_BM_FUNC2 102 # thrust
 param set-default SIM_GZ_BM_MIN2 0
-param set-default SIM_GZ_BM_MAX2 4000
-param set-default SIM_GZ_BM_DIS2 2000
+param set-default SIM_GZ_BM_MAX2 8000
+param set-default SIM_GZ_BM_DIS2 4000
 
 param set-default SIM_GZ_SV_FUNC1 201 # steering
 param set-default SIM_GZ_SV_FUNC2 202 # steering
