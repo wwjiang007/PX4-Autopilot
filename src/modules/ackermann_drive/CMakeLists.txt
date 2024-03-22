@@ -33,16 +33,16 @@
 
 # add_subdirectory(DifferentialDriveKinematics)
 
+add_subdirectory(AckermannDriveControl)
+
 px4_add_module(
 	MODULE modules__ackermann_drive
 	MAIN ackermann_drive
 	SRCS
-		AckermannDriveControl.cpp
-		AckermannDriveControl.hpp
 		AckermannDrive.cpp
 		AckermannDrive.hpp
 	DEPENDS
-		# DifferentialDriveKinematics
+		AckermannDriveControl
 		px4_work_queue
 	# MODULE_CONFIG
 	# 	module.yaml

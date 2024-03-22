@@ -59,7 +59,7 @@
 // Local includes
 // #include <DifferentialDriveKinematics.hpp>
 // #include "DifferentialDriveControl.hpp"
-#include "AckermannDriveControl.hpp"
+#include "AckermannDriveControl/AckermannDriveControl.hpp"
 
 #define DIFFERENTIAL_DRIVE 6
 #define ACKERMANN_DRIVE 5
