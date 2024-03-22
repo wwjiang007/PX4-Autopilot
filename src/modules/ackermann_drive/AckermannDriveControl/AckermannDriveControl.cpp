@@ -35,8 +35,6 @@
 
 using namespace time_literals;
 using namespace matrix;
-namespace differential_drive_control
-{
 
 AckermannDriveControl::AckermannDriveControl(ModuleParams *parent) : ModuleParams(parent)
 {
@@ -105,4 +103,3 @@ void AckermannDriveControl::Update()
 	actuator_servos.timestamp = now;
 	_actuator_servos_pub.publish(actuator_servos);
 }
-} // namespace differential_drive_control
