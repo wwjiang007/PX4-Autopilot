@@ -1,7 +1,7 @@
-module_name: Differential Drive Control
+module_name: Ackermann Drive Control
 
 parameters:
-  - group: Rover Differential Drive
+  - group: Rover Ackermann Drive
     definitions:
       RDD_WHEEL_BASE:
         description:

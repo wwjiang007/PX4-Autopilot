@@ -35,13 +35,10 @@
 
 using namespace time_literals;
 using namespace matrix;
-// namespace AckermannDrive
-// {
 
 AckermannDrive::AckermannDrive() :
 	ModuleParams(nullptr),
 	ScheduledWorkItem(MODULE_NAME, px4::wq_configurations::rate_ctrl)
-	// _differential_drive_control(this)
 {
 	updateParams();
 }
@@ -64,13 +61,7 @@ void AckermannDrive::Run()
 		exit_and_cleanup();
 	}
 
-	if (_param_ca_airframe.get() == DIFFERENTIAL_DRIVE) {
-		// _differential_drive_control.Update();
-		return;
-
-	} else if (_param_ca_airframe.get() == ACKERMANN_DRIVE) {
-		_ackermann_drive_control.Update();
-	}
+	_ackermann_drive_control.Update();
 }
 
 int AckermannDrive::task_spawn(int argc, char *argv[])
@@ -123,5 +114,3 @@ extern "C" __EXPORT int ackermann_drive_main(int argc, char *argv[])
 {
 	return AckermannDrive::main(argc, argv);
 }
-
-// } // namespace rover_control

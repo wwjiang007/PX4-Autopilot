@@ -57,15 +57,7 @@
 #include <math.h>
 
 // Local includes
-// #include <DifferentialDriveKinematics.hpp>
-// #include "DifferentialDriveControl.hpp"
 #include "AckermannDriveControl/AckermannDriveControl.hpp"
-
-#define DIFFERENTIAL_DRIVE 6
-#define ACKERMANN_DRIVE 5
-
-// namespace rover_control
-// {
 
 class AckermannDrive : public ModuleBase<AckermannDrive>, public ModuleParams,
 	public px4::ScheduledWorkItem
@@ -91,13 +83,9 @@ protected:
 private:
 	void Run() override;
 
-	// differential_drive_control::DifferentialDriveControl _differential_drive_control{this};
 	differential_drive_control::AckermannDriveControl _ackermann_drive_control{this};
-
 
 	DEFINE_PARAMETERS(
 		(ParamInt<px4::params::CA_AIRFRAME>) _param_ca_airframe
 	)
 };
-
-// } // namespace rover_control
