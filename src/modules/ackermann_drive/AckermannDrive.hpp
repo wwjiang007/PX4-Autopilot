@@ -41,16 +41,12 @@
 #include <px4_platform_common/px4_work_queue/ScheduledWorkItem.hpp>
 
 // uORB includes
-#include <uORB/topics/actuator_outputs.h>
-#include <uORB/topics/actuator_motors.h>
-#include <uORB/PublicationMulti.hpp>
 #include <uORB/topics/manual_control_setpoint.h>
 #include <uORB/topics/parameter_update.h>
 #include <uORB/topics/vehicle_status.h>
 #include <uORB/topics/vehicle_control_mode.h>
 #include <uORB/Publication.hpp>
 #include <uORB/Subscription.hpp>
-#include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/topics/differential_drive_setpoint.h>
 
 // Standard library includes
@@ -58,7 +54,7 @@
 
 // Local includes
 #include "AckermannDriveControl/AckermannDriveControl.hpp"
-//#include "AckermannDriveGuidance/AckermannDriveGuidance.hpp"
+//#include "AckermannDriveGuidance/AckermannDriveGuidance.hpp" //TO BE IMPLEMENTED
 #include "AckermannDriveKinematics/AckermannDriveKinematics.hpp"
 
 using namespace time_literals;
@@ -96,7 +92,7 @@ private:
 	uORB::Publication<differential_drive_setpoint_s> _differential_drive_setpoint_pub{ORB_ID(differential_drive_setpoint)};
 
 	AckermannDriveControl _ackermann_drive_control{this};
-	//AckermannDriveGuidance _ackermann_drive_guidance{this};
+	//AckermannDriveGuidance _ackermann_drive_guidance{this}; // TO BE IMPLEMENTED
 	AckermannDriveKinematics _ackermann_drive_kinematics{this};
 
 	bool _armed = false;
@@ -109,7 +105,6 @@ private:
 		(ParamFloat<px4::params::RDD_ANG_SCALE>) _param_rdd_ang_velocity_scale,
 		(ParamFloat<px4::params::RDD_WHEEL_SPEED>) _param_rdd_max_wheel_speed,
 		(ParamFloat<px4::params::RDD_WHEEL_BASE>) _param_rdd_wheel_base,
-		(ParamFloat<px4::params::RDD_WHEEL_RADIUS>) _param_rdd_wheel_radius,
-		(ParamInt<px4::params::CA_R_REV>) _param_r_rev
+		(ParamFloat<px4::params::RDD_WHEEL_RADIUS>) _param_rdd_wheel_radius
 	)
 };

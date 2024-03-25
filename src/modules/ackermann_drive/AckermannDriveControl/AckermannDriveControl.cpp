@@ -34,7 +34,6 @@
 #include "AckermannDriveControl.hpp"
 
 using namespace time_literals;
-using namespace matrix;
 
 AckermannDriveControl::AckermannDriveControl(ModuleParams *parent) : ModuleParams(parent)
 {

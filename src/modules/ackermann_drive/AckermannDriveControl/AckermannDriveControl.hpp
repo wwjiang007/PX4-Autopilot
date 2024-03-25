@@ -41,24 +41,14 @@
 #include <px4_platform_common/px4_work_queue/ScheduledWorkItem.hpp>
 
 // uORB includes
-#include <uORB/topics/actuator_outputs.h>
-#include <uORB/topics/actuator_motors.h>
-#include <uORB/topics/actuator_servos.h>
-#include <uORB/PublicationMulti.hpp>
-#include <uORB/topics/manual_control_setpoint.h>
-#include <uORB/topics/parameter_update.h>
-#include <uORB/topics/vehicle_status.h>
-#include <uORB/topics/vehicle_control_mode.h>
 #include <uORB/Publication.hpp>
 #include <uORB/Subscription.hpp>
-#include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/topics/differential_drive_setpoint.h>
 
-// Standard library includespr
+
+// Standard library
 #include <math.h>
 
-// Local includes
-// #include <AckermannDriveKinematics.hpp>
 class AckermannDriveControl : public ModuleParams
 {
 public:
@@ -78,13 +68,4 @@ private:
 	uORB::Publication<differential_drive_setpoint_s> _differential_drive_setpoint_pub{ORB_ID(differential_drive_setpoint)};
 
 	differential_drive_setpoint_s _differential_drive_setpoint{};
-
-	DEFINE_PARAMETERS(
-		(ParamFloat<px4::params::RDD_SPEED_SCALE>) _param_rdd_speed_scale,
-		(ParamFloat<px4::params::RDD_ANG_SCALE>) _param_rdd_ang_velocity_scale,
-		(ParamFloat<px4::params::RDD_WHEEL_SPEED>) _param_rdd_max_wheel_speed,
-		(ParamFloat<px4::params::RDD_WHEEL_BASE>) _param_rdd_wheel_base,
-		(ParamFloat<px4::params::RDD_WHEEL_RADIUS>) _param_rdd_wheel_radius,
-		(ParamInt<px4::params::CA_R_REV>) _param_r_rev
-	)
 };

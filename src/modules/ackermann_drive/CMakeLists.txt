@@ -31,9 +31,9 @@
 #
 ############################################################################
 
-add_subdirectory(AckermannDriveKinematics)
-
 add_subdirectory(AckermannDriveControl)
+add_subdirectory(AckermannDriveKinematics)
+#add_subdirectory(AckermannDriveGuidance) #TO BE IMPLEMENTED
 
 px4_add_module(
 	MODULE modules__ackermann_drive
@@ -44,7 +44,8 @@ px4_add_module(
 	DEPENDS
 		AckermannDriveControl
 		AckermannDriveKinematics
+		#AckermannDriveGuidance #TO BE IMPLEMENTED
 		px4_work_queue
-	# MODULE_CONFIG
-	# 	module.yaml
+	#MODULE_CONFIG
+	#	module.yaml
 )

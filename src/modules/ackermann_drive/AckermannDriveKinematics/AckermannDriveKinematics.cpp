@@ -52,7 +52,7 @@ void AckermannDriveKinematics::allocate()
 	hrt_abstime now = hrt_absolute_time();
 
 	actuator_motors_s actuator_motors{};
-	actuator_motors.reversible_flags = _param_r_rev.get(); // should be 3 see rc.rover_differential_defaults
+	actuator_motors.reversible_flags = _param_r_rev.get();
 	actuator_motors.control[0] = speed;
 	actuator_motors.control[1] = speed;
 	actuator_motors.timestamp = now;

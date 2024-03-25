@@ -33,13 +33,18 @@
 
 #pragma once
 
-#include <matrix/matrix/math.hpp>
+//px4 includes
 #include <px4_platform_common/module_params.h>
+
+// uORB includes
 #include <uORB/PublicationMulti.hpp>
 #include <uORB/Subscription.hpp>
 #include <uORB/topics/actuator_motors.h>
 #include <uORB/topics/actuator_servos.h>
 #include <uORB/topics/differential_drive_setpoint.h>
+
+//standard includes
+#include <matrix/matrix/math.hpp>
 
 /**
  * @brief Differential Drive Kinematics class for computing the kinematics of a differential drive robot.
@@ -62,9 +67,6 @@ private:
 	uORB::Publication<actuator_servos_s> _actuator_servos_pub{ORB_ID(actuator_servos)};
 
 	differential_drive_setpoint_s _differential_drive_control_output{};
-
-	float _max_speed{0.f};
-	float _max_angular_velocity{0.f};
 
 	DEFINE_PARAMETERS(
 		(ParamInt<px4::params::CA_R_REV>) _param_r_rev
