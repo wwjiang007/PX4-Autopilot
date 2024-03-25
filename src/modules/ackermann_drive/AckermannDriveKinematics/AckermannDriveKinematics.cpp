@@ -31,26 +31,37 @@
  *
  ****************************************************************************/
 
-#include "AckermannDriveControl.hpp"
+#include "AckermannDriveKinematics.hpp"
 
 using namespace time_literals;
 using namespace matrix;
 
-AckermannDriveControl::AckermannDriveControl(ModuleParams *parent) : ModuleParams(parent)
+AckermannDriveKinematics::AckermannDriveKinematics(ModuleParams *parent) : ModuleParams(parent)
 {
 	updateParams();
 }
 
-void AckermannDriveControl::updateParams()
+void AckermannDriveKinematics::allocate()
 {
-	ModuleParams::updateParams();
-}
+	if (_differential_drive_control_output_sub.updated()) {
+		_differential_drive_control_output_sub.copy(&_differential_drive_control_output);
+	}
 
-void AckermannDriveControl::control()
-{
-	_differential_drive_setpoint_sub.update(&_differential_drive_setpoint);
+	double steering = _differential_drive_control_output.yaw_rate;
+	double speed = _differential_drive_control_output.speed;
+	hrt_abstime now = hrt_absolute_time();
 
-	differential_drive_setpoint_s differential_drive_control_output = _differential_drive_setpoint;
-	differential_drive_control_output.timestamp = hrt_absolute_time();
-	_differential_drive_control_output_pub.publish(differential_drive_control_output);
+	actuator_motors_s actuator_motors{};
+	actuator_motors.reversible_flags = _param_r_rev.get(); // should be 3 see rc.rover_differential_defaults
+	actuator_motors.control[0] = speed;
+	actuator_motors.control[1] = speed;
+	actuator_motors.timestamp = now;
+	_actuator_motors_pub.publish(actuator_motors);
+
+	// publish data to actuator_servos (output module)
+	actuator_servos_s actuator_servos{};
+	actuator_servos.control[0] = -steering;
+	actuator_servos.control[1] = -steering;
+	actuator_servos.timestamp = now;
+	_actuator_servos_pub.publish(actuator_servos);
 }

@@ -58,6 +58,8 @@
 
 // Local includes
 #include "AckermannDriveControl/AckermannDriveControl.hpp"
+//#include "AckermannDriveGuidance/AckermannDriveGuidance.hpp"
+#include "AckermannDriveKinematics/AckermannDriveKinematics.hpp"
 
 using namespace time_literals;
 
@@ -85,9 +87,29 @@ protected:
 private:
 	void Run() override;
 
-	differential_drive_control::AckermannDriveControl _ackermann_drive_control{this}; //TO BE REMOVED
+	uORB::Subscription _differential_drive_setpoint_sub{ORB_ID(differential_drive_setpoint)};
+	uORB::Subscription _manual_control_setpoint_sub{ORB_ID(manual_control_setpoint)};
+	uORB::Subscription _parameter_update_sub{ORB_ID(parameter_update)};
+	uORB::Subscription _vehicle_control_mode_sub{ORB_ID(vehicle_control_mode)};
+	uORB::Subscription _vehicle_status_sub{ORB_ID(vehicle_status)};
+
+	uORB::Publication<differential_drive_setpoint_s> _differential_drive_setpoint_pub{ORB_ID(differential_drive_setpoint)};
+
+	AckermannDriveControl _ackermann_drive_control{this};
+	//AckermannDriveGuidance _ackermann_drive_guidance{this};
+	AckermannDriveKinematics _ackermann_drive_kinematics{this};
+
+	bool _armed = false;
+	bool _manual_driving = false;
+	float _max_speed{0.f};
+	float _max_angular_velocity{0.f};
 
 	DEFINE_PARAMETERS(
-		(ParamInt<px4::params::CA_AIRFRAME>) _param_ca_airframe //TO BE REMOVED
+		(ParamFloat<px4::params::RDD_SPEED_SCALE>) _param_rdd_speed_scale,
+		(ParamFloat<px4::params::RDD_ANG_SCALE>) _param_rdd_ang_velocity_scale,
+		(ParamFloat<px4::params::RDD_WHEEL_SPEED>) _param_rdd_max_wheel_speed,
+		(ParamFloat<px4::params::RDD_WHEEL_BASE>) _param_rdd_wheel_base,
+		(ParamFloat<px4::params::RDD_WHEEL_RADIUS>) _param_rdd_wheel_radius,
+		(ParamInt<px4::params::CA_R_REV>) _param_r_rev
 	)
 };

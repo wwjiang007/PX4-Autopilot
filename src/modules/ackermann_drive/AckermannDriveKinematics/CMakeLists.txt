@@ -1,6 +1,6 @@
 ############################################################################
 #
-#   Copyright (c) 2023 PX4 Development Team. All rights reserved.
+#   Copyright (c) 2023-2024 PX4 Development Team. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -31,20 +31,8 @@
 #
 ############################################################################
 
-add_subdirectory(AckermannDriveKinematics)
-
-add_subdirectory(AckermannDriveControl)
-
-px4_add_module(
-	MODULE modules__ackermann_drive
-	MAIN ackermann_drive
-	SRCS
-		AckermannDrive.cpp
-		AckermannDrive.hpp
-	DEPENDS
-		AckermannDriveControl
-		AckermannDriveKinematics
-		px4_work_queue
-	# MODULE_CONFIG
-	# 	module.yaml
+px4_add_library(AckermannDriveKinematics
+	AckermannDriveKinematics.cpp
 )
+
+target_include_directories(AckermannDriveKinematics PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

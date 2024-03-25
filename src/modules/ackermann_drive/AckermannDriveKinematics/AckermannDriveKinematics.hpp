@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- *   Copyright (c) 2023 PX4 Development Team. All rights reserved.
+ *   Copyright (c) 2023-2024 PX4 Development Team. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,58 +33,40 @@
 
 #pragma once
 
-// PX4 includes
-#include <px4_platform_common/px4_config.h>
-#include <px4_platform_common/defines.h>
-#include <px4_platform_common/module.h>
+#include <matrix/matrix/math.hpp>
 #include <px4_platform_common/module_params.h>
-#include <px4_platform_common/px4_work_queue/ScheduledWorkItem.hpp>
-
-// uORB includes
-#include <uORB/topics/actuator_outputs.h>
+#include <uORB/PublicationMulti.hpp>
+#include <uORB/Subscription.hpp>
 #include <uORB/topics/actuator_motors.h>
 #include <uORB/topics/actuator_servos.h>
-#include <uORB/PublicationMulti.hpp>
-#include <uORB/topics/manual_control_setpoint.h>
-#include <uORB/topics/parameter_update.h>
-#include <uORB/topics/vehicle_status.h>
-#include <uORB/topics/vehicle_control_mode.h>
-#include <uORB/Publication.hpp>
-#include <uORB/Subscription.hpp>
-#include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/topics/differential_drive_setpoint.h>
 
-// Standard library includespr
-#include <math.h>
-
-// Local includes
-// #include <AckermannDriveKinematics.hpp>
-class AckermannDriveControl : public ModuleParams
+/**
+ * @brief Differential Drive Kinematics class for computing the kinematics of a differential drive robot.
+ *
+ * This class provides functions to set the wheel base and radius, and to compute the inverse kinematics
+ * given linear velocity and yaw rate.
+ */
+class AckermannDriveKinematics : public ModuleParams
 {
 public:
-	AckermannDriveControl(ModuleParams *parent);
-	~AckermannDriveControl() = default;
+	AckermannDriveKinematics(ModuleParams *parent);
+	~AckermannDriveKinematics() = default;
 
-	void control();
-
-protected:
-	void updateParams() override;
+	void allocate();
 
 private:
+	uORB::Subscription _differential_drive_control_output_sub{ORB_ID(differential_drive_control_output)};
 
-	uORB::Subscription _differential_drive_setpoint_sub{ORB_ID(differential_drive_setpoint)};
+	uORB::PublicationMulti<actuator_motors_s> _actuator_motors_pub{ORB_ID(actuator_motors)};
+	uORB::Publication<actuator_servos_s> _actuator_servos_pub{ORB_ID(actuator_servos)};
 
-	uORB::Publication<differential_drive_setpoint_s> _differential_drive_control_output_pub{ORB_ID(differential_drive_control_output)};
-	uORB::Publication<differential_drive_setpoint_s> _differential_drive_setpoint_pub{ORB_ID(differential_drive_setpoint)};
+	differential_drive_setpoint_s _differential_drive_control_output{};
 
-	differential_drive_setpoint_s _differential_drive_setpoint{};
+	float _max_speed{0.f};
+	float _max_angular_velocity{0.f};
 
 	DEFINE_PARAMETERS(
-		(ParamFloat<px4::params::RDD_SPEED_SCALE>) _param_rdd_speed_scale,
-		(ParamFloat<px4::params::RDD_ANG_SCALE>) _param_rdd_ang_velocity_scale,
-		(ParamFloat<px4::params::RDD_WHEEL_SPEED>) _param_rdd_max_wheel_speed,
-		(ParamFloat<px4::params::RDD_WHEEL_BASE>) _param_rdd_wheel_base,
-		(ParamFloat<px4::params::RDD_WHEEL_RADIUS>) _param_rdd_wheel_radius,
 		(ParamInt<px4::params::CA_R_REV>) _param_r_rev
 	)
 };

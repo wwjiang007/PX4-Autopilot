@@ -52,6 +52,8 @@ bool AckermannDrive::init()
 void AckermannDrive::updateParams()
 {
 	ModuleParams::updateParams();
+	_max_speed = _param_rdd_max_wheel_speed.get() * _param_rdd_wheel_radius.get();
+	_max_angular_velocity = _max_speed / (_param_rdd_wheel_base.get() / 2.f);
 }
 
 void AckermannDrive::Run()
@@ -61,7 +63,43 @@ void AckermannDrive::Run()
 		exit_and_cleanup();
 	}
 
-	_ackermann_drive_control.Update();
+	hrt_abstime now = hrt_absolute_time();
+
+	if (_parameter_update_sub.updated()) {
+		parameter_update_s pupdate;
+		if(_parameter_update_sub.copy(&pupdate)){
+			updateParams();
+		}
+	}
+
+	if (_vehicle_control_mode_sub.updated()) {
+		vehicle_control_mode_s vehicle_control_mode;
+
+		if (_vehicle_control_mode_sub.copy(&vehicle_control_mode)) {
+			_armed = vehicle_control_mode.flag_armed;
+			_manual_driving = vehicle_control_mode.flag_control_manual_enabled; // change this when more modes are supported
+		}
+	}
+
+	if (_manual_driving) {
+		// Manual mode
+		// directly produce setpoints from the manual control setpoint (joystick)
+		if (_manual_control_setpoint_sub.updated()) {
+			differential_drive_setpoint_s _differential_drive_setpoint{};
+			manual_control_setpoint_s manual_control_setpoint{};
+
+			if (_manual_control_setpoint_sub.copy(&manual_control_setpoint)) {
+				_differential_drive_setpoint.timestamp = now;
+				_differential_drive_setpoint.speed = manual_control_setpoint.throttle * _param_rdd_speed_scale.get() * _max_speed;
+				_differential_drive_setpoint.yaw_rate = manual_control_setpoint.roll * _param_rdd_ang_velocity_scale.get() *
+									_max_angular_velocity;
+				_differential_drive_setpoint_pub.publish(_differential_drive_setpoint);
+			}
+		}
+	}
+
+	_ackermann_drive_control.control();
+	_ackermann_drive_kinematics.allocate();
 }
 
 int AckermannDrive::task_spawn(int argc, char *argv[])
