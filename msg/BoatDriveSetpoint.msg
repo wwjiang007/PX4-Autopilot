@@ -7,4 +7,4 @@ bool closed_loop_rudder_angle_control # true if rudder angle is controlled using
 float32 lateral_acceleration # [m/s^2] later acceleration
 bool closed_loop_lateral_acceleration_control # true if later_acceleration is controlled using gyroscope feedback, false if direct feed-forward
 
-# TOPICS differential_drive_setpoint differential_drive_control_output
+# TOPICS boat_drive_setpoint boat_drive_control_output
