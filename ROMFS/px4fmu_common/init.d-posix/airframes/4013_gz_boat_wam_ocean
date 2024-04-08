@@ -5,4 +5,4 @@
 
 PX4_SIM_MODEL=${PX4_SIM_MODEL:=boat_ocean}
 
-. ${R}etc/init.d-posix/airframes/4012_gz_boat
+. ${R}etc/init.d-posix/airframes/4012_gz_boat_wam

@@ -36,8 +36,8 @@ add_subdirectory(BoatDriveGuidance)
 add_subdirectory(BoatDriveKinematics)
 
 px4_add_module(
-	MODULE modules__differential_drive
-	MAIN differential_drive
+	MODULE modules__boat_drive
+	MAIN boat_drive
 	SRCS
 		BoatDrive.cpp
 		BoatDrive.hpp

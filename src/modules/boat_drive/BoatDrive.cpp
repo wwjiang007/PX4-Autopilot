@@ -50,15 +50,15 @@ void BoatDrive::updateParams()
 {
 	ModuleParams::updateParams();
 
-	_boat_drive_kinematics.setWheelBase(_param_rdd_wheel_base.get());
+	// _boat_drive_kinematics.setWheelBase(_param_rdd_wheel_base.get());
 
-	_max_speed = _param_rdd_wheel_speed.get() * _param_rdd_wheel_radius.get();
-	_boat_drive_guidance.setMaxSpeed(_max_speed);
-	_boat_drive_kinematics.setMaxSpeed(_max_speed);
+	// _max_speed = _param_rdd_wheel_speed.get() * _param_rdd_wheel_radius.get();
+	// _boat_drive_guidance.setMaxSpeed(_max_speed);
+	// _boat_drive_kinematics.setMaxSpeed(_max_speed);
 
-	_max_angular_velocity = _max_speed / (_param_rdd_wheel_base.get() / 2.f);
-	_boat_drive_guidance.setMaxAngularVelocity(_max_angular_velocity);
-	_boat_drive_kinematics.setMaxAngularVelocity(_max_angular_velocity);
+	// _max_angular_velocity = _max_speed / (_param_rdd_wheel_base.get() / 2.f);
+	// _boat_drive_guidance.setMaxAngularVelocity(_max_angular_velocity);
+	// _boat_drive_kinematics.setMaxAngularVelocity(_max_angular_velocity);
 }
 
 void BoatDrive::Run()
@@ -166,7 +166,7 @@ int BoatDrive::print_usage(const char *reason)
 	PRINT_MODULE_DESCRIPTION(
 		R"DESCR_STR(
 ### Description
-Rover Boat Drive controller.
+Boat Drive controller.
 )DESCR_STR");
 
 	PRINT_MODULE_USAGE_NAME("boat_drive", "controller");

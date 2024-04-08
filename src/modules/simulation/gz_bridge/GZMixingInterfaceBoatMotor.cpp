@@ -48,8 +48,8 @@ bool GZMixingInterfaceBoatMotor::init(const std::string &model_name)
 	// std::string boat_left_motor_topic = "/model/boat_0/joint/left_propeller_joint/cmd_vel";
 	// std::string boat_right_motor_topic = "/model/boat_0/joint/right_propeller_joint/cmd_vel";
 
-	std::string boat_left_motor_topic = "/model/boat_0/joint/left_propeller_joint/cmd_thrust";
-	std::string boat_right_motor_topic = "/model/boat_0/joint/right_propeller_joint/cmd_thrust";
+	std::string boat_left_motor_topic = "/model/boat_wam_0/joint/left_propeller_joint/cmd_thrust";
+	std::string boat_right_motor_topic = "/model/boat_wam_0/joint/right_propeller_joint/cmd_thrust";
 
 	_actuators_pub_left = _node.Advertise<gz::msgs::Double>(boat_left_motor_topic);
 	_actuators_pub_right = _node.Advertise<gz::msgs::Double>(boat_right_motor_topic);

@@ -336,7 +336,7 @@ int GZBridge::task_spawn(int argc, char *argv[])
 
 #if defined(ENABLE_LOCKSTEP_SCHEDULER)
 			// lockstep scheduler wait for initial clock set before returning
-			int sleep_count_limit = 10000;
+			int sleep_count_limit = 100000;
 
 			while ((instance->world_time_us() == 0) && sleep_count_limit > 0) {
 				// wait for first clock message
