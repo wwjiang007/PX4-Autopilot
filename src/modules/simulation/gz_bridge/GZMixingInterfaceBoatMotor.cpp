@@ -101,13 +101,13 @@ bool GZMixingInterfaceBoatMotor::updateOutputs(bool stop_boat_motors, uint16_t o
 		// printf("boat_motor_velocity_message: %f\n", (double)boat_motor_velocity_message.velocity(0));
 
 		gz::msgs::Double boat_motor_velocity_message_right;
-		boat_motor_velocity_message_right.set_data(outputs[0] - 4000.0f);
+		boat_motor_velocity_message_right.set_data(outputs[0]);
 
 		// printf("outputs[0]: %f\n", (double)(outputs[0] - 100.0f));
 		// printf("boat_motor_velocity_message_right: %f\n", (double)boat_motor_velocity_message_right.data());
 
 		gz::msgs::Double boat_motor_velocity_message_left;
-		boat_motor_velocity_message_left.set_data(outputs[0] - 4000.0f);
+		boat_motor_velocity_message_left.set_data(outputs[0]);
 
 		// printf("boat_motor_velocity_message_left: %f\n", (double)boat_motor_velocity_message_left.data());
 		// printf(" \n");
